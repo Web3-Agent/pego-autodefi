@@ -9,7 +9,7 @@ import {
   lightTheme
 } from '@rainbow-me/rainbowkit';
 // import { getDefaultWallets, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
-import { goerli,polygon, polygonZkEvmTestnet, polygonMumbai, klaytn, baseGoerli, lineaTestnet } from '@wagmi/chains'
+// import { goerli,polygon, polygonZkEvmTestnet, polygonMumbai, klaytn, baseGoerli, lineaTestnet } from '@wagmi/chains'
 import { createPublicClient, http } from 'viem'
 
 import { configureChains,createConfig, WagmiConfig } from 'wagmi'
