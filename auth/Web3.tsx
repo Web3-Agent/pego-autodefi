@@ -185,7 +185,7 @@ const pego: Chain = {
 const { chains, publicClient } = configureChains(
   [pegoTestnet,pego],
   [
-    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
+    infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
     publicProvider()
   ]
 );
