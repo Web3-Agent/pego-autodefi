@@ -10,13 +10,17 @@ import {
 } from '@rainbow-me/rainbowkit';
 // import { getDefaultWallets, RainbowKitProvider, Theme } from '@rainbow-me/rainbowkit'
 import { goerli,polygon, polygonZkEvmTestnet, polygonMumbai, klaytn, baseGoerli, lineaTestnet } from '@wagmi/chains'
+import { createPublicClient, http } from 'viem'
 
-import { configureChains, createClient, WagmiConfig } from 'wagmi'
+import { configureChains,createConfig, WagmiConfig } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { ReactNode } from 'react'
 import { infuraProvider } from 'wagmi/providers/infura'
 import React from 'react'
 import { Chain } from '@rainbow-me/rainbowkit';
+
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { config } from '../middleware';
 
 
 const myTheme = merge(lightTheme(), {
@@ -153,23 +157,53 @@ const pego: Chain = {
   }
 };
 
-const NETWORKS = [pegoTestnet, pego]
-const { chains, provider } = configureChains(NETWORKS, [infuraProvider({ apiKey: "" }), publicProvider()])
+// const NETWORKS = [ pegoTestnet, pego ]
+
+// const config = createConfig({
+//   autoConnect: true,
+//   publicClient: createPublicClient({
+//     chain: mainnet,
+//     transport: http()
+//   }),
+// })
+
+
+// const { chains, provider } = configureChains(NETWORKS, [infuraProvider({ apiKey: "" }), publicProvider()])
+
+// const { connectors } = getDefaultWallets({
+//   appName: "Auto Defi",
+//   chains,
+// })
+
+// const client = createConfig({
+//   autoConnect: true,
+//   connectors,
+//   provider,
+// })
+
+
+const { chains, publicClient } = configureChains(
+  [pegoTestnet,pego],
+  [
+    alchemyProvider({ apiKey: process.env.ALCHEMY_ID }),
+    publicProvider()
+  ]
+);
 
 const { connectors } = getDefaultWallets({
-  appName: "Auto Defi",
-  chains,
-})
+  appName: 'My RainbowKit App',
+  projectId: '234235sd',
+  chains
+} );
 
-const client = createClient({
+const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  provider,
+  publicClient
 })
-
 export function Web3Provider(props: Props) {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider modalSize="compact" theme={lightTheme({
 
         borderRadius: 'medium',

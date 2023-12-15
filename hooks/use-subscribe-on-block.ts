@@ -8,25 +8,19 @@ type Callback = (blockNumber: number, unsubscribe: Unsubscribe) => void | Promis
 export function useSubscribeOnBlock(): { subscribe: (callback: Callback) => Unsubscribe | void };
 export function useSubscribeOnBlock(callback: Callback): { subscribe: () => Unsubscribe | void };
 export function useSubscribeOnBlock(cb?: Callback) {
-  const provider = useProvider();
   const callbackRef = useRef<Callback>();
 
   const Unsubscribe = () => {
     if (!callbackRef.current) {
       return;
     }
-    if (!provider) {
-      return;
-    }
+  
 
-    provider.off('block', callbackRef.current);
     callbackRef.current = undefined;
   };
 
   const subscribe = (call?: Callback) => {
-    if (!provider) {
-      return;
-    }
+  
     if (call && cb) {
       throw new Error('Cannot pass callback to useSubscribeOnBlock twice');
     }
@@ -41,7 +35,6 @@ export function useSubscribeOnBlock(cb?: Callback) {
     }
 
     callbackRef.current = async (level: number) => callback(level, Unsubscribe);
-    provider.on('block', callbackRef.current);
 
     return Unsubscribe;
   };

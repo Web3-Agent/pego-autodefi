@@ -16,7 +16,6 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { useProvider } from 'wagmi';
 
 import { RelSubHeader } from './list-subheader';
 
@@ -34,7 +33,7 @@ export const TriggerForm: FC<TriggerFormProps> = ({ data, setData }) => {
   const [innerData, setInnerData] = useState<TriggerParams>(data);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const provider = useProvider();
+
 
 
 

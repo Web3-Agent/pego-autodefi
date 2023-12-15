@@ -156,7 +156,7 @@ const TokenBalancesComponent: React.FC = () => {
 
   const tokenData: TokenData[] = useMemo(
     () => [
-      { symbol: 'ETH', name: 'Ethereum', image: 'ETH_IMAGE_URL', address: '', abi: [] },
+      { symbol: 'ETH', name: 'Ethereum', image: 'https://assets.debank.com/static/media/eth.47c40f70.svg', address: '', abi: [] },
       { symbol: 'WETH', name: 'Wrapped Ethereum', image: 'https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png', address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', abi: ERC20_ABI },
       { symbol: 'WBTC', name: 'Wrapped Bitcoin', image: 'https://static.debank.com/image/eth_token/logo_url/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599/d3c52e7c7449afa8bd4fad1c93f50d93.png', address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599', abi: ERC20_ABI },
       { symbol: 'USDT', name: 'Tether', image: 'https://static.debank.com/image/coin/logo_url/usdt/23af7472292cb41dc39b3f1146ead0fe.png', address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', abi: ERC20_ABI },
@@ -169,54 +169,112 @@ const TokenBalancesComponent: React.FC = () => {
   useEffect(() => {
     const web3 = getWeb3();
 
+    // const fetchTokenBalances = async () => {
+    //   const balances: { [symbol: string]: string } = {};
+
+    //   for (const token of tokenData) {
+    //     if (token.address) {
+    //       const contract = getTokenContract(web3, token.address, token.abi);
+    //       const balance = await getTokenBalance(contract, accountAddress);
+    //       balances[token.symbol] = balance;
+    //     }
+    //   }
+
+    //   setTokenBalances(balances);
+    // };
+
     const fetchTokenBalances = async () => {
-      const balances: { [symbol: string]: string } = {};
+  const balances: { [symbol: string]: string } = {};
 
-      for (const token of tokenData) {
-        if (token.address) {
-          const contract = getTokenContract(web3, token.address, token.abi);
-          const balance = await getTokenBalance(contract, accountAddress);
-          balances[token.symbol] = balance;
-        }
-      }
+  for (const token of tokenData) {
+    if (token.address) {
+      const contract = getTokenContract(web3, token.address, token.abi);
+      const balance = await getTokenBalance(contract, accountAddress);
+      balances[token.symbol] = balance;
+    } else {
+      // If token address is not available, set balance as 0
+      balances[token.symbol] = '0';
+    }
+  }
 
-      setTokenBalances(balances);
-    };
+  setTokenBalances(balances);
+};
 
     fetchTokenBalances();
   }, [accountAddress, tokenData]);
 
 
 
-  return (
-    <div>
+  // return (
+  //   <div>
 
-      <ul>
-        <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-20"}
-        > <h2>Balances</h2></li>
-        {!!(accountBalance && accountBalance.length) && (
-          accountBalance?.map((token: any, index: number) => (
-
-
-            <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-2"}
-              key={index}>
-              {/* {tokenInfo.name} */}
-              <img height={"30px"} width={"30px"} src={token.logo_url} alt={token?.contract_ticker_symbol} />
-
-              {token.contract_ticker_symbol} : {convertAmountFromRawNumber(token?.balance)}
-
-              {/* <img src={tokenInfo.image} alt={symbol} style={{ width: '20px', height: '20px', marginLeft: '5px' }} /> */}
-            </li>
-
-          ))
-        )}
+  //     <ul>
+  //       <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-20"}
+  //       > <h2>Balances</h2></li>
+  //       {!!(accountBalance && accountBalance.length) && (
+  //         accountBalance?.map((token: any, index: number) => (
 
 
+  //           <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-2"}
+  //             key={index}>
+  //             {/* {tokenInfo.name} */}
+  //             <img height={"30px"} width={"30px"} src={token.logo_url} alt={token?.contract_ticker_symbol} />
+
+  //             {token.contract_ticker_symbol} : {convertAmountFromRawNumber(token?.balance)}
+
+  //             {/* <img src={tokenInfo.image} alt={symbol} style={{ width: '20px', height: '20px', marginLeft: '5px' }} /> */}
+  //           </li>
+
+  //         ))
+  //       )}
 
 
-      </ul>
-    </div>
-  );
+
+
+  //     </ul>
+  //   </div>
+  // );
+
+return (
+  <div>
+    <ul>
+      <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-20"}>
+        <h2>Balances</h2>
+      </li>
+
+      {tokenData.map((token: TokenData, index: number) => (
+        <li
+          className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-2"}
+          key={index}
+        >
+          <div
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: '4px solid black',
+            }}
+          >
+            <img
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+              src={token.image}
+              alt={token.symbol}
+            />
+          </div>
+          {token.symbol} : {parseFloat(convertAmountFromRawNumber(tokenBalances[token.symbol] || '0')).toFixed(2)}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+
+
 };
 
 export default TokenBalancesComponent;

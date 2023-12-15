@@ -272,7 +272,6 @@ import {
   Typography
 } from '@mui/material';
 import { JSBI } from '@uniswap/sdk';
-import { useProvider } from 'wagmi';
 
 import { Uniswap as UniswapIcon } from '@/components/svg/uniswap';
 import { tokens } from '@/config/tokens';
@@ -293,16 +292,9 @@ export const UniswapForm: FC<UniswapFormProps> = ({ data, setData }) => {
   const [outputAmount, setOutputAmount] = useState<string>('0');
   const [uniswap, setUniswap] = useState<Uniswap>();
 
-  const provider = useProvider();
  
 
-  useEffect(() => {
-    if (provider && smartAccountAddress) {
-      Uniswap.create(provider, smartAccountAddress);
 
-      setUniswap(Uniswap.instance!);
-    }
-  }, [provider, smartAccountAddress]);
 
   const selectedInToken = useMemo(() => getTokenByTokenSymbol(innerData.tokenSymbolIn), [innerData.tokenSymbolIn]);
   const selectedOutToken = useMemo(() => getTokenByTokenSymbol(innerData.tokenSymbolOut), [innerData.tokenSymbolOut]);
