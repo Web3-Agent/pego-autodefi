@@ -54,6 +54,7 @@
     "eslint-config-next": "13.5.2",
     "ethers": "^5.5.3",
     "fastest-levenshtein": "^1.0.16",
+    "jszip": "^3.10.1",
     "moment": "^2.29.4",
     "mongodb": "^6.2.0",
     "nanoid": "^5.0.1",
