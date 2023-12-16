@@ -13,7 +13,6 @@ import {
 } from '@uniswap/v3-sdk';
 import { BigNumber, Contract, providers, utils } from 'ethers';
 import JSBI from 'jsbi';
-import { goerli } from 'wagmi';
 
 import { Erc20 } from './erc20-token';
 import { WrapEth } from './wrap-eth';
@@ -24,6 +23,7 @@ import { Token as IToken } from '@/config/tokens';
 import { PreOpStruct } from '@/types/custom';
 import { getTokenByTokenSymbol } from '@/utils/get-token-by-symbol';
 import { toAtomic } from '@/utils/units';
+import { goerli } from 'viem/chains';
 
 //#region Types
 type TokenTrade = Trade<Token, Token, TradeType>;

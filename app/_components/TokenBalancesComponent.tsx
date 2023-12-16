@@ -238,22 +238,23 @@ const TokenBalancesComponent: React.FC = () => {
 return (
   <div>
     <ul>
-      <li className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-20"}>
+      <li className={"flex   !text-gray-800  text-lg font-semibold items-center gap-x-4 mt-20 mb-6 ml-2"}>
         <h2>Balances</h2>
       </li>
 
       {tokenData.map((token: TokenData, index: number) => (
         <li
-          className={"flex  rounded-md p-2 cursor-pointer hover:bg-gray-300 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-2"}
+          className={"flex  rounded-xl p-2 cursor-pointer bg-white border-2 active:bg-gray-200 !text-gray-700  text-sm font-semibold items-center gap-x-4 mt-2"}
           key={index}
         >
           <div
             style={{
-              width: '40px',
-              height: '40px',
+              width: '30px',
+              height: '30px',
               borderRadius: '50%',
               overflow: 'hidden',
-              border: '4px solid black',
+              // border: '2px solid black',
+              marginLeft:"5px"
             }}
           >
             <img

@@ -1,6 +1,5 @@
 import { useRef } from 'react';
 
-import { useProvider } from 'wagmi';
 
 type Unsubscribe = () => void;
 type Callback = (blockNumber: number, unsubscribe: Unsubscribe) => void | Promise<void>;

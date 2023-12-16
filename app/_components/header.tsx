@@ -61,7 +61,6 @@ import {
   Typography,
   styled
 } from '@mui/material';
-import { Web3AuthConnector } from '../../auth/wagmi';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { ethers } from 'ethers';
 import { useActiveTabStates } from "../../providers/operations";
@@ -156,17 +155,6 @@ const SmartAccountTile = () => {
 
 export function Header() {
   const { address, connector, isConnected } = useAccount();
-  // const { connect, connectors, error } = useConnect();
-  // const { disconnect } = useDisconnect();
-  // const { smartAccountAddress } = useSmartAccount();
-
-  //  const { connect } = useConnect({
-  //   connector: Web3AuthConnector
-  // });
-  // const { disconnect } = useDisconnect();
-
-
-  //  const isReady = isConnected && address && smartAccountAddress;
 
 
   const handleSignMessage = async () => {
@@ -197,8 +185,8 @@ export function Header() {
     { title: "Home", src: "https://i.imgur.com/QMNAWX7.png", gap: true, slug: "/", tab: "askWeb3Agent" },
     // { title: "Ask Web3Agent", src: "https://i.imgur.com/2pHVHza.png", slug: "/", tab: "askWeb3Agent" },
     { title: "Send Transacetion", src: "https://i.imgur.com/XjBwspt.png", slug: "/", tab: "sendTxn" },
-    // { title: "Deploy Contracts", src: "https://i.imgur.com/VT7UdPH.png", slug: "/", tab: "deployContract" },
-     { title: "Defi", src: "https://i.imgur.com/IYxIvAB.png", slug: "/defi-prompt" },
+     { title: "Deploy Contracts", src: "https://i.imgur.com/VT7UdPH.png", slug: "/", tab: "deployContract" },
+    //  { title: "Defi", src: "https://i.imgur.com/IYxIvAB.png", slug: "/defi-prompt" },
     { title: "Builder", src: "https://i.imgur.com/IYxIvAB.png", slug: "/builder" },
   ];
 

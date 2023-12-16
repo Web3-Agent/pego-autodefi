@@ -183,7 +183,7 @@ const pego: Chain = {
 
 
 const { chains, publicClient } = configureChains(
-  [pegoTestnet,pego],
+  [pego,pegoTestnet],
   [
     infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
     publicProvider()

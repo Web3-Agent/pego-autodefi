@@ -1,15 +1,11 @@
+'use client'
 import { FC } from 'react';
-import { ArrowBack, Settings } from '@mui/icons-material';
-import {
-  Backdrop,
-  Box,
-  Button,
-  ButtonGroup,
-  IconButton,
-  Typography,
-  styled,
-} from '@mui/material';
+
+import { ArrowBack } from '@mui/icons-material';
+import { Backdrop, Box, Button, ButtonGroup, IconButton, Typography, styled } from '@mui/material';
+
 import { FormsGenerator } from '../forms/forms.generator';
+
 import { useIsDesktop } from '@/hooks/is-desktop';
 import { useOperations } from '@/providers/operations';
 
@@ -24,21 +20,23 @@ const CustomBackdrop = styled(Backdrop)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
   backgroundColor: theme.palette.background.default,
   flexDirection: 'column',
-  justifyContent: 'space-between',
+  justifyContent: 'space-between'
 }));
 
 const CustomBackdropHeader = styled(Box)(({ theme }) => ({
   width: '100%',
   height: '48px',
   padding: theme.spacing(1),
+
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+
   backgroundColor: theme.palette.background.paper,
   borderTopLeftRadius: theme.spacing(1),
   borderTopRightRadius: theme.spacing(1),
   borderColor: theme.palette.divider,
-  borderBottom: 1,
+  borderBottom: 1
 }));
 
 const CustomBackdropContent = styled(Box)(({ theme }) => ({
@@ -47,23 +45,18 @@ const CustomBackdropContent = styled(Box)(({ theme }) => ({
   width: '100%',
   padding: theme.spacing(2),
   paddingTop: theme.spacing(1),
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.background.default
 }));
 
 const CustomBackdropFooter = styled(ButtonGroup)(({ theme }) => ({
   padding: theme.spacing(2),
   borderRadius: theme.spacing(1),
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.background.paper
 }));
 
-export const OperationScreen: FC<OperationScreenProps> = ({
-  isOpen,
-  setIsOpen,
-}) => {
-  const { operations, updateOperation, sendOperations, setOperations } =
-    useOperations();
+export const OperationScreen: FC<OperationScreenProps> = ({ isOpen, setIsOpen }) => {
+  const { operations, updateOperation, sendOperations, setOperations } = useOperations();
   const { isDesktop } = useIsDesktop();
-
   const handleCancel = () => {
     setOperations([]);
     setIsOpen(false);
@@ -81,23 +74,17 @@ export const OperationScreen: FC<OperationScreenProps> = ({
           <ArrowBack />
         </IconButton>
         <Typography variant="body1">Request result</Typography>
-        <IconButton>
-          {/* Replace with your Settings component */}
-          <Settings />
-        </IconButton>
+        <IconButton>{/* <Settings /> */}</IconButton>
       </CustomBackdropHeader>
 
       <CustomBackdropContent>
-        <FormsGenerator
-          listOperations={operations}
-          setOperation={updateOperation}
-        />
+        <FormsGenerator listOperations={operations} setOperation={updateOperation} />
       </CustomBackdropContent>
 
       <CustomBackdropFooter
         fullWidth
         sx={{
-          borderRadius: isDesktop ? 2 : 0,
+          borderRadius: isDesktop ? 2 : 0
         }}
       >
         <Button onClick={handleCancel}>Cancel</Button>
@@ -108,3 +95,4 @@ export const OperationScreen: FC<OperationScreenProps> = ({
     </CustomBackdrop>
   );
 };
+
