@@ -94,7 +94,9 @@ const getTokenContract = (web3: Web3, tokenAddress: string, abi: any[]) => {
   return new web3.eth.Contract(abi, tokenAddress);
 };
 
-const getTokenBalance = async (contract: any, accountAddress: string) => {
+const getTokenBalance = async ( contract: any, accountAddress: string ) =>
+{
+  console.log("acccount address is =====>>>>>>>>",accountAddress)
   try {
     const balance = await contract.methods.balanceOf(accountAddress).call();
     return balance;
