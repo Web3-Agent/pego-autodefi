@@ -170,7 +170,7 @@ export default function Builder() {
                 <textarea
                   value={builderForm?.additionDetails}
                   onChange={(e) => handleBuilderFormChange(e?.target?.value, 'additionDetails')}
-                  className="w-full p-2 bg-gray-100 rounded-lg text-gray-300"
+                  className="w-full p-2 bg-gray-100 rounded-lg "
                   placeholder="Describe Customisation"
                   rows="4">
                 </textarea>

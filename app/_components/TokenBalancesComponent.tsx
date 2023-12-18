@@ -153,8 +153,8 @@ const TokenBalancesComponent: React.FC = () => {
   }, []);
 
   const [tokenBalances, setTokenBalances] = useState<{ [symbol: string]: string }>({});
-  const accountAddress = '0x7bfee91193d9df2ac0bfe90191d40f23c773c060'; // Replace with the actual Ethereum address
-  // const accountAddress = account
+  // const accountAddress = '0x7bfee91193d9df2ac0bfe90191d40f23c773c060'; // Replace with the actual Ethereum address
+  const accountAddress = account
 
   const tokenData: TokenData[] = useMemo(
     () => [
