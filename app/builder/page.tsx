@@ -42,9 +42,33 @@ export default function Builder() {
     }
 
   }
-  const deployContract = () => {
-    const scode = chatGPTRawResponse.substring(chatGPTRawResponse.indexOf('```solidity') + 11, chatGPTRawResponse.lastIndexOf('```'))
-    console.log({ scode })
+  const deployContract = async () => {
+    try {
+      setIsLoading(true)
+      const scode = chatGPTRawResponse.substring(chatGPTRawResponse.indexOf('```solidity') + 11, chatGPTRawResponse.lastIndexOf('```'))
+      console.log({ scode })
+      const response = await fetch(
+        '/api/get-contract-compile',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sourceCode: scode })
+        });
+      console.log(response)
+      if (response.ok) {
+        const { abi, bytecode, } = await response.json()
+        console.log("LINE: 62", {
+          abi, bytecode
+        })
+      }
+    } catch (error) {
+      console.log("LINE: 60", { error })
+    }finally{
+      setIsLoading(false)
+
+    }
   }
   const handleBuilderFormChange = (value: any, key: string) => {
     console.log({ value, key })

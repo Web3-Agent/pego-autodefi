@@ -185,7 +185,7 @@ export default async function deployContract({
 
 
 export async function deployContractCompile({
-  chainName = 'Polygon Mumai',
+  chainName = 'Goerli',
   contractName = 'opgptContract',
   sourceCode,
   constructorArgs
@@ -266,14 +266,17 @@ export async function deployContractCompile({
   let bytecode = contract[contractName].evm.bytecode.object
   if (!bytecode.startsWith('0x')) {
     bytecode = '0x' + bytecode
-  }   
+  }
   console.log('Building deployData OK.')
 
-  const compiledContract ={
+  const compiledContract = {
     abi: abi,
     bytecode: bytecode,
     args: constructorArgs || []
   }
- 
+
   return compiledContract
 };
+
+
+https://remix.ethereum.org/?#code=Ly8gU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IE1JVApwcmFnbWEgc29saWRpdHkgXjAuOC4wOwoKaW1wb3J0ICJAb3BlbnplcHBlbGluL2NvbnRyYWN0cy90b2tlbi9FUkMyMC9FUkMyMC5zb2wiOwppbXBvcnQgIkBvcGVuemVwcGVsaW4vY29udHJhY3RzL3Rva2VuL0VSQzIwL2V4dGVuc2lvbnMvRVJDMjBCdXJuYWJsZS5zb2wiOwppbXBvcnQgIkBvcGVuemVwcGVsaW4vY29udHJhY3RzL2FjY2Vzcy9Pd25hYmxlLnNvbCI7Cgpjb250cmFjdCBNeVRva2VuIGlzIEVSQzIwLCBFUkMyMEJ1cm5hYmxlLCBPd25hYmxlIHsKICAgIGNvbnN0cnVjdG9yKCkgRVJDMjAoIk15VG9rZW4iLCAiTVRLIikgewogICAgICAgIF9taW50KG1zZy5zZW5kZXIsIDMwMDAwMCAqIDEwICoqIGRlY2ltYWxzKCkpOwogICAgfQoKICAgIGZ1bmN0aW9uIG1pbnQoYWRkcmVzcyB0bywgdWludDI1NiBhbW91bnQpIHB1YmxpYyBvbmx5T3duZXIgewogICAgICAgIF9taW50KHRvLCBhbW91bnQpOwogICAgfQoKICAgIGZ1bmN0aW9uIGJ1cm4oYWRkcmVzcyBmcm9tLCB1aW50MjU2IGFtb3VudCkgcHVibGljIG9ubHlPd25lciB7CiAgICAgICAgX2J1cm4oZnJvbSwgYW1vdW50KTsKICAgIH0KfQ==&lang=en&optimize=false&runs=200&evmVersion=null
