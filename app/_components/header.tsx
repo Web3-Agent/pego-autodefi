@@ -192,7 +192,7 @@ export function Header() {
 
   return (
    
-    <><header className="!sticky top-6 z-40 flex h-16 w-full  border-2 rounded-2xl shrink-0 items-center justify-between bg-gray-100  bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-8 backdrop-blur-xl">
+    <><header className="!sticky top-6 z-10 flex h-16 w-full  border-2 rounded-2xl shrink-0 items-center justify-between bg-gray-100  bg-gradient-to-b from-background/10 via-background/50 to-background/80 px-8 backdrop-blur-xl">
       <div className="flex items-center gap-4">
         {isConnected ? (
           <>
