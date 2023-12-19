@@ -9,13 +9,18 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 const PROMT_API_URL = '/api/parse-builder-prompt'
 import { RxColorWheel } from "react-icons/rx";
+import { toBase64 } from 'openai/core';
+import { TbBrandVscode } from "react-icons/tb";
+import { IoCodeDownloadSharp } from "react-icons/io5";
+import { LiaFileContractSolid } from "react-icons/lia";
+
 export default function Builder() {
   const [chatGPTRawResponse, setChatGPTRawResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false)
   const [builderForm, setBuilderForm] = useState<any>({
     template: '',
     featuresRequest: [],
-    additionDetails: 'The Token name will MyToken with the symbol name MTK and supply 300000'
+    additionDetails: 'The Token name will MyToken with the symbol name MTK'
 
   })
   // Features for each template
@@ -42,6 +47,19 @@ export default function Builder() {
     }
 
   }
+  const openInRemix = async () => {
+    try {
+      const code = chatGPTRawResponse.substring(chatGPTRawResponse.indexOf('```solidity') + 11, chatGPTRawResponse.lastIndexOf('```'))
+      console.log({ code })
+      const base = toBase64(code)
+      console.log({ base })
+      const link = `https://remix.ethereum.org/?#code=${base}&autoCompile=true&lang=en&optimize=false&runs=200&evmVersion=null&version=soljson-v0.8.20+commit.a1b79de6.js`
+      console.log({ link })
+      window.open(link, "_blank")
+    } catch (error) {
+      console.log({ error })
+    }
+  }
   const deployContract = async () => {
     try {
       setIsLoading(true)
@@ -65,7 +83,7 @@ export default function Builder() {
       }
     } catch (error) {
       console.log("LINE: 60", { error })
-    }finally{
+    } finally {
       setIsLoading(false)
 
     }
@@ -198,18 +216,23 @@ export default function Builder() {
                 }} />
               {
                 !isLoading && !chatGPTRawResponse && !chatGPTRawResponse?.length && (
-                  <button type="button" onClick={promptCall} className="mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300">
-                    Generate Smart Contract
-                  </button>)
+                  <button type="button" onClick={promptCall} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
+                    <LiaFileContractSolid className='h-6 w-6' />  Generate Smart Contract
+                  </button>
+                )
               }
               {
                 chatGPTRawResponse && chatGPTRawResponse?.length && (
                   <div className='flex gap-4'>
-                    <button type="button" onClick={downloadSourceCode} className="mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300">
-                      Download Contract
+
+                    <button type="button" onClick={downloadSourceCode} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
+                      <IoCodeDownloadSharp className='h-6 w-6' /> Download Contract
                     </button>
-                    <button type="button" onClick={deployContract} className="mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300">
+                    {/* <button type="button" onClick={deployContract} className="mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300">
                       Deploy Contract
+                    </button> */}
+                    <button type="button" onClick={openInRemix} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
+                      <TbBrandVscode className='h-6 w-6' /> Open in Remix
                     </button>
                   </div>
                 )
