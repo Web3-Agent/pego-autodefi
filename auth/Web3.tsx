@@ -21,6 +21,7 @@ import { Chain } from '@rainbow-me/rainbowkit';
 
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { config } from '../middleware';
+import { goerli } from 'viem/chains';
 
 
 const myTheme = merge(lightTheme(), {
@@ -157,6 +158,27 @@ const pego: Chain = {
   }
 };
 
+const INEVM: Chain = {
+  id: 1738,
+  name: 'INEVM',
+  network: 'INEVM',
+  iconUrl: 'https://docs.injective.network//img/injective.svg',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'INEVM',
+    symbol: 'INJ',
+  },
+  rpcUrls: {
+    public: { http: ['https://inevm-rpc.caldera.dev'] },
+    default: { http: ['https://inevm-rpc.caldera.dev'] },
+  },
+  blockExplorers: {
+    default: { name: 'Explorer', url: 'https://inevm.calderaexplorer.xyz/' },
+
+  }
+};
+
 // const NETWORKS = [ pegoTestnet, pego ]
 
 // const config = createConfig({
@@ -183,7 +205,7 @@ const pego: Chain = {
 
 
 const { chains, publicClient } = configureChains(
-  [pego,pegoTestnet],
+  [INEVM,goerli],
   [
     infuraProvider({ apiKey: process.env.INFURA_API_KEY }),
     publicProvider()
@@ -191,7 +213,7 @@ const { chains, publicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'My RainbowKit App',
+  appName: 'Auto Defi',
   projectId: '234235sd',
   chains
 } );

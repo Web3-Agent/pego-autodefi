@@ -96,9 +96,9 @@ const getTokenContract = (web3: Web3, tokenAddress: string, abi: any[]) => {
 
 const getTokenBalance = async ( contract: any, accountAddress: string ) =>
 {
-  console.log("acccount address is =====>>>>>>>>",accountAddress)
+  // console.log("acccount address is =====>>>>>>>>",accountAddress)
   try {
-    const balance = await contract.methods.balanceOf(accountAddress).call();
+    const balance = await contract?.methods?.balanceOf(accountAddress)?.call();
     return balance;
   } catch (error) {
     console.error('Error getting token balance:', error);
