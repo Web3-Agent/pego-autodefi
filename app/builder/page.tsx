@@ -13,7 +13,17 @@ import { toBase64 } from 'openai/core';
 import { TbBrandVscode } from "react-icons/tb";
 import { IoCodeDownloadSharp } from "react-icons/io5";
 import { LiaFileContractSolid } from "react-icons/lia";
+import { LuHardHat } from "react-icons/lu";
 
+const contract = `
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract MyToken is ERC20 {
+    constructor() ERC20("MyToken", "MTK") {}
+}`
 export default function Builder() {
   const [chatGPTRawResponse, setChatGPTRawResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false)
@@ -45,7 +55,36 @@ export default function Builder() {
     } finally {
       setIsLoading(false)
     }
-
+  }
+  const downloadHardHatProject = async () => {
+    setIsLoading(true)
+    try {
+      const scode = chatGPTRawResponse.substring(chatGPTRawResponse.indexOf('```solidity') + 11, chatGPTRawResponse.lastIndexOf('```'))
+      console.log({ scode })
+      const response = await fetch(
+        '/api/hardhat-project',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ sourceCode: scode })
+        });
+      console.log(response)
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'hardhat-project.zip';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   }
   const openInRemix = async () => {
     try {
@@ -228,9 +267,9 @@ export default function Builder() {
                     <button type="button" onClick={downloadSourceCode} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
                       <IoCodeDownloadSharp className='h-6 w-6' /> Download Contract
                     </button>
-                    {/* <button type="button" onClick={deployContract} className="mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300">
-                      Deploy Contract
-                    </button> */}
+                    <button type="button" onClick={downloadHardHatProject} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
+                      <LuHardHat className='h-6 w-6' /> Download Hardhat
+                    </button>
                     <button type="button" onClick={openInRemix} className="flex justify-center items-center gap-2 mt-4 text-white bg-black py-2 px-4 rounded-lg  transition duration-300 text-base font-semibold">
                       <TbBrandVscode className='h-6 w-6' /> Open in Remix
                     </button>
